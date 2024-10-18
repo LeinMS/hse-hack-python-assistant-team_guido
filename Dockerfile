@@ -16,4 +16,4 @@ EXPOSE 8000
 
 ENV PYTHONUNBUFFERED=1
 
-CMD ["poetry", "run", "python", "main.py"]
+CMD ["bash"]

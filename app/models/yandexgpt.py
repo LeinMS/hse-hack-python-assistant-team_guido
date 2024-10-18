@@ -2,7 +2,7 @@ import os
 from typing import Optional
 
 import requests
-
+import time
 from app.models.base import BaseModel
 
 
@@ -12,6 +12,7 @@ class YandexGPT(BaseModel):
     model_urls = {
         "lite": "gpt://{}/yandexgpt-lite/latest",
         "pro": "gpt://{}/yandexgpt/latest",  # Restricted by competition rules, but you can test accuracy with it
+        "personal": "ds://bt1e87efnjbim8sq56b2",
     }
 
     def __init__(
@@ -20,8 +21,8 @@ class YandexGPT(BaseModel):
         folder_id: str,
         model_name: str = "lite",
         system_prompt: Optional[str] = None,
-        temperature: float = 0.6,
-        max_tokens: int = 2000,
+        temperature: float = 0.0,
+        max_tokens: int = 1000,
     ) -> None:
         super().__init__(system_prompt)
         self.api_url = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
@@ -50,7 +51,7 @@ class YandexGPT(BaseModel):
             "completionOptions": self.completion_options,
             "messages": self.messages,
         }
-
+        time.sleep(1)
         response = requests.post(self.api_url, headers=self.headers, json=json_request)
         if response.status_code != 200:
             print("Error:", response.status_code, response.text)

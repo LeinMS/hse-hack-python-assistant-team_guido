@@ -4,7 +4,6 @@ from typing import Optional
 
 class BaseModel(abc.ABC):
     """Abstract class for all models."""
-
     def __init__(self, system_prompt: Optional[str] = None) -> None:
         self.messages = []
         self.system_prompt = system_prompt

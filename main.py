@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
 
     generate_submit(
-        test_solutions_path="./data/raw/test/solutions.xlsx",
+        test_solutions_path="./data/raw/test/_solutions.xlsx",
         predict_func=predict,
         save_path="./data/processed/submission.csv",
         use_tqdm=True,

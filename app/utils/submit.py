@@ -57,45 +57,44 @@ def generate_submit(test_solutions_path: str, predict_func: Callable, save_path:
     # Цикл по каждому решению
     for i in bar:
         try:
-            idx = test_solutions.iloc[i]['id_x']
+            idx = test_solutions.iloc[i]['id']
 
             solution_row = test_solutions.iloc[i]
 
             result = toxic_classifier.predict(solution_row['student_solution'])
 
-            if result['label'] != 'OK':
+            if result['label'] == 'OK':
+
+                # Предсказание
+                text = predict_func(solution_row)  # здесь можно сделать что угодно с решением студента
+
+                # Получение эмбеддинга и его конвертация в строку
+                embedding = embedding2string(get_sentence_embedding(text))
+
+                # Заполнение DataFrame
+                submit_df.loc[i] = [idx, text, embedding]
+
+                # Если работаешь на GPU, можешь освободить память (опционально)
+                torch.cuda.empty_cache()
+
+            else:
                 print(f'НЕТ ЦЕНЗУРЫ в строке {i}')
 
-            # Предсказание
-            text = predict_func(solution_row)  # здесь можно сделать что угодно с решением студента
+                text = 'Решение не прошло цензуру'
+                # Получение эмбеддинга и его конвертация в строку
+                embedding = embedding2string(get_sentence_embedding(text))
 
-            # Получение эмбеддинга и его конвертация в строку
-            embedding = embedding2string(get_sentence_embedding(text))
+                # Заполнение DataFrame
+                submit_df.loc[i] = [idx, text, embedding]
 
-            # Заполнение DataFrame
-            submit_df.loc[i] = [idx, text, embedding]
-
-            # Если работаешь на GPU, можешь освободить память (опционально)
-            torch.cuda.empty_cache()
-
-            # else:
-            #     print(f'ЦЕНЗУРА в строке {i}')
-            #
-            #     text = 'Решение не прошло цензуру'
-            #     # Получение эмбеддинга и его конвертация в строку
-            #     embedding = embedding2string(get_sentence_embedding(text))
-            #
-            #     # Заполнение DataFrame
-            #     submit_df.loc[i] = [idx, text, embedding]
-            #
-            #     # Если работаешь на GPU, можешь освободить память (опционально)
-            #     torch.cuda.empty_cache()
+                # Если работаешь на GPU, можешь освободить память (опционально)
+                torch.cuda.empty_cache()
 
 
 
         except Exception as e:
             print(f"Ошибка при обработке строки {i}: {e}")
-            idx = test_solutions.iloc[i]['id_x']
+            idx = test_solutions.iloc[i]['id']
             submit_df.loc[i] = [idx, "Ошибка", ""]
 
 

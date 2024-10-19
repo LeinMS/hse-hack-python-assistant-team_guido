@@ -53,6 +53,12 @@
 yc iam create-token
 ```
 
+3) folder-id можно узнать, воспользовавшись командой
+
+```bash
+yc config list
+```
+
 ## Инструкция по запуску проекта в Docker
 
 ### Шаг 1: Установка Docker

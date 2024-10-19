@@ -110,7 +110,7 @@ poetry install
 Чтобы создать .env файл, запускаем следующую команду:
 
 ```bash
-cp .env .env
+cp .env,example .env,example
 ```
 
 ## Структура проекта

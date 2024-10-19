@@ -63,6 +63,8 @@ def generate_submit(test_solutions_path: str, predict_func: Callable, save_path:
 
             result = toxic_classifier.predict(solution_row['student_solution'])
 
+
+
             if result['label'] == 'OK':
 
                 # Предсказание

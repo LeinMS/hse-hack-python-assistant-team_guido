@@ -27,13 +27,11 @@ if __name__ == "__main__":
         model_name='personal'
     )
 
-
     def predict(row: pd.Series) -> str:
-        return yandex_gpt.ask(row["combined_text"])
-
+        return yandex_gpt.ask(row["student_solution"])
 
     generate_submit(
-        test_solutions_path="./data/raw/test/_solutions.xlsx",
+        test_solutions_path="./data/raw/test/solutions.xlsx",
         predict_func=predict,
         save_path="./data/processed/submission.csv",
         use_tqdm=True,

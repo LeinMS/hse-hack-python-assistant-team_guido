@@ -92,10 +92,6 @@ docker cp <CONTAINER_ID>:/app/data/processed/submission.csv ./submission.csv
 Ваш файл будет в дирректории
 
 
-```bash
-docker compose up
-```
-
 ### В локальной среде
 
 `Poetry` является более продвинутым пакетным менеджером, чем `pip`. На с большей вероятность не возникнет ситуации, что нужные пакеты установятся неправильно.
@@ -104,14 +100,6 @@ docker compose up
 poetry install
 ```
 
-### Переменные окружения
-
-.env.example файл в корне проекта. \
-Чтобы создать .env файл, запускаем следующую команду:
-
-```bash
-cp .env,example .env,example
-```
 
 ## Структура проекта
 
